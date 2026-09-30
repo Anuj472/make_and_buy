@@ -1,4 +1,4 @@
-machine_id,available_weekly_hours,existing_wip_hours,operating_cost_per_hour
+machine_id,available_yearly_hours,existing_wip_hours,operating_cost_per_hour
 CNC_MILL,2340.0,45.0,1500.0
 CNC_MILL_2,2340.0,0.0,1500.0
 CNC_MILL_3,2340.0,0.0,1500.0
