@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make or Buy: Optimization Scenarios Framework</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #eff6ff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --bg-main: #f9fafb;
+            --card-bg: #ffffff;
+            --border: #e5e7eb;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .scenario-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .scenario-header {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .scenario-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            background: var(--primary-light);
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        .scenario-title h2 {
+            margin: 0;
+            color: var(--text-main);
+        }
+
+        .scenario-title p {
+            margin: 0;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .source-box {
+            background-color: #f3f4f6;
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .source-box h4 {
+            margin-top: 0;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .source-box ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+    </style>
+
+    <style>
+        .doc-section {
+            margin-bottom: 5rem;
+            padding-bottom: 3rem;
+            border-bottom: 4px dashed #cbd5e1;
+        }
+    </style>
+</head>
+
+<body>
+    <div
+        style="text-align: center; margin: 2rem 0; padding: 2rem; background: #1e293b; color: white; border-radius: 8px;">
+        <h1 style="color: white; margin: 0;">Master Make-or-Buy Documentation</h1>
+        <p style="font-size: 1.2rem; margin-top: 0.5rem;">Combined Scenarios, Mathematical Formulas, and Database
+            Schemas</p>
+    </div>
+    <div class="doc-section">
+
+
+        <div class="container">
+            <div class="header">
+                <h1>Make-or-Buy Decision Scenarios</h1>
+                <p>Comprehensive framework for Multiple Criteria Decision Making (MCDM)</p>
+            </div>
+
+            <!-- Scenario 1 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🎯</div>
+                    <div class="scenario-title">
+                        <h2>Scenario 1: Maximize Strategic Competitive Performance</h2>
+                        <p>Goal: Make decisions that help the company win market share by offering the best
+                            product/service.</p>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data Attribute</th>
+                            <th>Description</th>
+                            <th>Data Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Delivery Lead Time</td>
+                            <td>How fast the vendor can deliver vs. internal production time.</td>
+                            <td>Days (Numeric)</td>
+                        </tr>
+                        <tr>
+                            <td>Delivery Reliability</td>
+                            <td>Historical on-time delivery rate.</td>
+                            <td>Percentage (%)</td>
+                        </tr>
+                        <tr>
+                            <td>Defect Rate / Yield</td>
+                            <td>Internal factory yield rate vs. vendor's quality defect rate.</td>
+                            <td>Percentage (%)</td>
+                        </tr>
+                        <tr>
+                            <td>Volume Flexibility</td>
+                            <td>Minimum Order Quantities (MOQ) and speed of scaling production.</td>
+                            <td>Score (-8 to +8)</td>
+                        </tr>
+                        <tr>
+                            <td>Core Competency Flag</td>
+                            <td>Is this item a core differentiator for our brand?</td>
+                            <td>Boolean (True/False)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="source-box">
+                    <h4>🔄 How to get these data points:</h4>
+                    <ul>
+                        <li><strong>ERP/MRP Systems:</strong> (e.g., SAP, Oracle) automatically track historical
+                            delivery times, defect rates, and on-time percentages for both internal factory and external
+                            vendors.</li>
+                        <li><strong>PLM (Product Lifecycle Management):</strong> Engineering teams define which parts
+                            are core IP (Core Competency Flags).</li>
+                        <li><strong>Procurement Contracts:</strong> Vendor MOQs and flexibility terms are extracted
+                            directly from supplier agreements.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Scenario 2 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">👥</div>
+                    <div class="scenario-title">
+                        <h2>Scenario 2: Maximize Managerial Performance</h2>
+                        <p>Goal: Optimize internal operations, workforce health, and ease of relationship management.
+                        </p>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data Attribute</th>
+                            <th>Description</th>
+                            <th>Data Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Labor Utilization / Capacity</td>
+                            <td>Are internal workers idle, or already exhausted by overtime?</td>
+                            <td>Percentage (%)</td>
+                        </tr>
+                        <tr>
+                            <td>Transaction Complexity</td>
+                            <td>Difficulty of logistics, customs, and contract management for this option.</td>
+                            <td>Score (-8 to +8)</td>
+                        </tr>
+                        <tr>
+                            <td>Supplier Relationship Value</td>
+                            <td>Strategic necessity of feeding orders to a specific vendor to maintain partnership.</td>
+                            <td>Score (-8 to +8)</td>
+                        </tr>
+                        <tr>
+                            <td>Customer Perception</td>
+                            <td>Will customers react poorly to outsourcing (e.g., loss of "Made in USA" tag)?</td>
+                            <td>Score (-8 to +8)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="source-box">
+                    <h4>🔄 How to get these data points:</h4>
+                    <ul>
+                        <li><strong>MES (Manufacturing Execution Systems) / HR:</strong> Tracks real-time machine and
+                            worker utilization to prevent burnout.</li>
+                        <li><strong>Managerial Surveys (AHP):</strong> Transaction complexity and supplier relationship
+                            scores are usually gathered quarterly via internal surveys from Procurement Managers.</li>
+                        <li><strong>CRM / Sales Feedback:</strong> Customer perception scores are sourced from marketing
+                            and sales teams based on brand strategy.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Scenario 3 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🛡️</div>
+                    <div class="scenario-title">
+                        <h2>Scenario 3: Minimize Sourcing Risks</h2>
+                        <p>Goal: Protect the company from supply chain collapse, IP theft, or vendor bankruptcy.</p>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data Attribute</th>
+                            <th>Description</th>
+                            <th>Data Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Intellectual Property (IP) Risk</td>
+                            <td>Risk of proprietary knowledge leaking to the vendor.</td>
+                            <td>Score (-8 to +8)</td>
+                        </tr>
+                        <tr>
+                            <td>Supply Disruption Risk</td>
+                            <td>Vendor's financial stability, geopolitical risk, or natural disaster exposure.</td>
+                            <td>Score (-8 to +8)</td>
+                        </tr>
+                        <tr>
+                            <td>Appropriation Risk</td>
+                            <td>Probability the vendor steals the design to become a direct competitor.</td>
+                            <td>Score (-8 to +8)</td>
+                        </tr>
+                        <tr>
+                            <td>Dual-Sourcing Availability</td>
+                            <td>Are there alternative vendors, or does this create a monopoly dependency?</td>
+                            <td>Boolean (True/False)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="source-box">
+                    <h4>🔄 How to get these data points:</h4>
+                    <ul>
+                        <li><strong>Legal & Compliance Teams:</strong> Evaluate and score IP and Appropriation risks
+                            based on NDA strength and patent protection.</li>
+                        <li><strong>Financial Audits / Third-Party Data:</strong> Companies use services like Dun &
+                            Bradstreet to automatically pull financial solvency and geopolitical risk scores for
+                            suppliers.</li>
+                        <li><strong>Procurement Database:</strong> Sourcing systems flag whether an item has approved
+                            secondary suppliers (Dual-Sourcing).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Scenario 4 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">💰</div>
+                    <div class="scenario-title">
+                        <h2>Scenario 4: Maximize Financial Performance</h2>
+                        <p>Goal: The classic approach—find the path with the absolute lowest cost and best cash flow.
+                        </p>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data Attribute</th>
+                            <th>Description</th>
+                            <th>Data Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Internal Total Cost</td>
+                            <td>Raw Material Cost + Labor Cost + Machine Overhead.</td>
+                            <td>Currency (₹)</td>
+                        </tr>
+                        <tr>
+                            <td>Vendor Total Cost</td>
+                            <td>Vendor Purchase Price + Shipping/Tariffs + Incoming QA Cost.</td>
+                            <td>Currency (₹)</td>
+                        </tr>
+                        <tr>
+                            <td>Capital Expenditure (CapEx)</td>
+                            <td>New investments required (e.g., buying new CNC machines).</td>
+                            <td>Currency (₹)</td>
+                        </tr>
+                        <tr>
+                            <td>Inventory Holding Cost</td>
+                            <td>Cost of stockpiling raw materials vs. Just-In-Time vendor delivery.</td>
+                            <td>Currency (₹)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="source-box">
+                    <h4>🔄 How to get these data points:</h4>
+                    <ul>
+                        <li><strong>Cost Accounting (ERP):</strong> Activity-Based Costing (ABC) modules provide exact
+                            internal machine overhead and labor rates.</li>
+                        <li><strong>Vendor RFQs:</strong> Live quotes and shipping contracts provide exact external
+                            costs.</li>
+                        <li><strong>Finance Department:</strong> Provides exact CapEx budgets and standardized inventory
+                            holding cost percentages.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="doc-section">
+
+
+        <div class="container">
+            <div class="header">
+                <h1>Technical Documentation</h1>
+                <p>Mathematical Objective Functions and Database Definitions used in the MILP Solver.</p>
+            </div>
+
+            <h2>PART 1: The Optimization Formulas (app.py)</h2>
+            <p>Since the PuLP solver is an <strong>LpMinimize</strong> engine, it always attempts to find the path with
+                the lowest overall "Penalty" score while respecting machine capacity limits. The objective function is
+                calculated as follows based on the selected goal:</p>
+
+            <div class="card">
+                <h3>💰 1. Maximize Financial Performance</h3>
+                <p>The solver minimizes the pure financial cost (in Rupees) of acquiring the parts.</p>
+                <div class="formula-box">
+                    make_penalty = (raw_material_cost * (1 + expected_scrap)) + labor_cost<br><br>
+                    buy_penalty = vendor_purchase_price + incoming_qa_cost
+                </div>
+                <p><em>Note: If the Financial goal is chosen, the solver ALSO adds `(machine_setup_hours +
+                        machine_run_hours) * machine_operating_cost` to the make_penalty.</em></p>
+            </div>
+
+            <div class="card">
+                <h3>🛡️ 2. Minimize Sourcing Risks</h3>
+                <p>Risk scores are rated from -8 (Bad) to +8 (Good). Since the solver wants to <strong>minimize</strong>
+                    a penalty, we subtract the score from 24 (the max possible score) to create a massive positive
+                    penalty for bad risks.</p>
+                <div class="formula-box">
+                    risk_score = ip_leakage_risk + supplier_disruption_risk + appropriation_risk<br><br>
+                    make_penalty = 0 <span style="color:#64748b;">// Zero external risk for making it
+                        internally</span><br>
+                    buy_penalty = 24 - risk_score
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>👥 3. Maximize Managerial Performance</h3>
+                <p>Similar to Risks, Managerial scores range from -8 (Headache) to +8 (Smooth). The solver penalizes
+                    options that cause logistical or relational headaches.</p>
+                <div class="formula-box">
+                    mgr_score = transaction_complexity + supplier_rel_value + customer_perception<br><br>
+                    make_penalty = 0<br>
+                    buy_penalty = 24 - mgr_score
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🏆 4. Maximize Strategic Competitive Performance</h3>
+                <p>This goal minimizes the negative impact on the customer by heavily penalizing long lead times and
+                    high defect rates. Defect rates (e.g. 0.05) are multiplied by 1000 so they mathematically weigh
+                    against lead times (e.g. 45 days).</p>
+                <div class="formula-box">
+                    make_penalty = internal_lead_time_days + (internal_defect_rate * 1000) -
+                    volume_flexibility_score<br><br>
+                    buy_penalty = vendor_lead_time_days + (vendor_defect_rate * 1000)
+                </div>
+            </div>
+
+            <hr style="margin: 3rem 0; border: 1px solid var(--border);">
+
+            <h2>PART 2: Active CSV Data Tables</h2>
+            <p>The solver joins 8 different CSV tables into a master matrix before running the optimization. Below is
+                the purpose of every file currently in your working directory.</p>
+
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Filename</th>
+                            <th>Type</th>
+                            <th>What it contains</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>mto_item_master.csv</strong></td>
+                            <td>Core Financials</td>
+                            <td>Base specs for every item: raw material cost, labor cost, scrap percentage, and the
+                                strategic 'is_critical_component' flag.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>machine_capacities.csv</strong></td>
+                            <td>Constraints</td>
+                            <td>Factory limits: available yearly hours for each machine, existing WIP, and operating
+                                cost per hour.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>production_routings.csv</strong></td>
+                            <td>Constraints</td>
+                            <td>The exact machine sequence, setup hours, and run hours required to build an item
+                                internally.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>external_supplier_quotes.csv</strong></td>
+                            <td>Core Financials</td>
+                            <td>The vendor's quoted price, historical lead times, and incoming QA costs for outsourcing.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>active_indents.csv</strong></td>
+                            <td>Demand</td>
+                            <td>The actual customer orders being optimized (Order ID, Item ID, and Quantity required).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>strategic_performance_data.csv</strong></td>
+                            <td>MCDM Data</td>
+                            <td>Lead times, defect rates, and volume flexibility scores for both the vendor and the
+                                internal factory.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>managerial_performance_data.csv</strong></td>
+                            <td>MCDM Data</td>
+                            <td>Scores evaluating transaction complexity, supplier relationship value, and customer
+                                perception.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>sourcing_risk_data.csv</strong></td>
+                            <td>MCDM Data</td>
+                            <td>Scores evaluating IP leakage risk, appropriation risk, and general supplier disruption
+                                risk.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Final_Make_Buy_Decisions.csv</strong></td>
+                            <td><span class="highlight">Output</span></td>
+                            <td>The final generated dataset containing the optimal Make, Buy, or Split quantities chosen
+                                by the solver.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="doc-section">
+
+
+        <div class="container">
+            <header>
+                <h1><span class="gradient-text">Actual Data Models</span></h1>
+                <p>Database schema mapping exactly to the CSV datasets in the project.</p>
+            </header>
+
+            <!-- 1. Active Indents -->
+            <section class="schema-section">
+                <div class="section-header">
+                    <div class="section-number">1</div>
+                    <h2>Active Indents <span style="font-weight: 300; opacity: 0.6; font-size: 1.2rem;">(Orders)</span>
+                    </h2>
+                    <div class="csv-badge">active_indents.csv</div>
+                </div>
+                <p class="section-desc">Contains the customer demand, deadlines, and financial constraints for specific
+                    items.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Column Name</th>
+                                <th>Description</th>
+                                <th>Data Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: #fff; font-weight: 500;">order_id</td>
+                                <td>Unique identifier for the customer order.</td>
+                                <td><span class="data-type primary-key">PK : String</span></td>
+                            </tr>
+                            <tr>
+                                <td>item_id</td>
+                                <td>The product requested in this order.</td>
+                                <td><span class="data-type foreign-key">FK : String</span></td>
+                            </tr>
+                            <tr>
+                                <td>order_quantity</td>
+                                <td>Total number of units required.</td>
+                                <td><span class="data-type">Integer</span></td>
+                            </tr>
+                            <tr>
+                                <td>delivery_period_days</td>
+                                <td>Maximum allowed days to fulfill the order.</td>
+                                <td><span class="data-type">Integer</span></td>
+                            </tr>
+                            <tr>
+                                <td>ld_rate_per_week</td>
+                                <td>Liquidated Damages (penalty) rate applied per week late.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                            <tr>
+                                <td>max_ld_percentage</td>
+                                <td>Maximum cap on the total penalty.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                            <tr>
+                                <td>contract_value_per_unit</td>
+                                <td>The revenue generated per unit sold.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 2. Item Master -->
+            <section class="schema-section">
+                <div class="section-header">
+                    <div class="section-number">2</div>
+                    <h2>Item Master <span style="font-weight: 300; opacity: 0.6; font-size: 1.2rem;">(Components)</span>
+                    </h2>
+                    <div class="csv-badge">mto_item_master.csv</div>
+                </div>
+                <p class="section-desc">The catalog of all opto-electronic assemblies, containing material and labor
+                    base costs.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Column Name</th>
+                                <th>Description</th>
+                                <th>Data Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: #fff; font-weight: 500;">item_id</td>
+                                <td>Unique identifier for the product/assembly.</td>
+                                <td><span class="data-type primary-key">PK : String</span></td>
+                            </tr>
+                            <tr>
+                                <td>description</td>
+                                <td>Human-readable name of the product.</td>
+                                <td><span class="data-type">String</span></td>
+                            </tr>
+                            <tr>
+                                <td>is_critical_component</td>
+                                <td>Flag indicating if it must be made in-house for strategic reasons.</td>
+                                <td><span class="data-type">Boolean</span></td>
+                            </tr>
+                            <tr>
+                                <td>raw_material_cost_per_unit</td>
+                                <td>Cost of physical materials required to build one unit.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                            <tr>
+                                <td>expected_scrap_percentage</td>
+                                <td>The average percentage of units ruined during production.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                            <tr>
+                                <td>labor_cost_per_unit</td>
+                                <td>Direct human labor cost to build one unit.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 3. Machine Capacities -->
+            <section class="schema-section">
+                <div class="section-header">
+                    <div class="section-number">3</div>
+                    <h2>Machine Capacities</h2>
+                    <div class="csv-badge">machine_capacities.csv</div>
+                </div>
+                <p class="section-desc">Details available in-house machine capabilities and operating costs.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Column Name</th>
+                                <th>Description</th>
+                                <th>Data Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: #fff; font-weight: 500;">machine_id</td>
+                                <td>Unique identifier for a piece of factory equipment.</td>
+                                <td><span class="data-type primary-key">PK : String</span></td>
+                            </tr>
+                            <tr>
+                                <td>available_yearly_hours</td>
+                                <td>Total theoretical hours the machine can run.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                            <tr>
+                                <td>existing_wip_hours</td>
+                                <td>Hours already booked by work-in-progress.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                            <tr>
+                                <td>operating_cost_per_hour</td>
+                                <td>Overhead cost per hour to run the machine.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 4. Production Routings -->
+            <section class="schema-section">
+                <div class="section-header">
+                    <div class="section-number">4</div>
+                    <h2>Production Routings <span style="font-weight: 300; opacity: 0.6; font-size: 1.2rem;">(Make
+                            Steps)</span></h2>
+                    <div class="csv-badge">production_routings.csv</div>
+                </div>
+                <p class="section-desc">Maps out the step-by-step process of how to build an item internally.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Column Name</th>
+                                <th>Description</th>
+                                <th>Data Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: #fff; font-weight: 500;">item_id</td>
+                                <td>The product being built.</td>
+                                <td><span class="data-type foreign-key">FK : String</span></td>
+                            </tr>
+                            <tr>
+                                <td style="color: #fff; font-weight: 500;">operation_sequence</td>
+                                <td>The order of the manufacturing step (e.g. 10, 20, 30).</td>
+                                <td><span class="data-type primary-key">Composite PK : Integer</span></td>
+                            </tr>
+                            <tr>
+                                <td>machine_id</td>
+                                <td>The machine required for this step.</td>
+                                <td><span class="data-type foreign-key">FK : String</span></td>
+                            </tr>
+                            <tr>
+                                <td>setup_hours</td>
+                                <td>Fixed time required to prepare the machine (regardless of batch size).</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                            <tr>
+                                <td>run_hours_per_unit</td>
+                                <td>Variable time required to process a single unit on the machine.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 5. External Supplier Quotes -->
+            <section class="schema-section">
+                <div class="section-header">
+                    <div class="section-number">5</div>
+                    <h2>External Supplier Quotes <span style="font-weight: 300; opacity: 0.6; font-size: 1.2rem;">(Buy
+                            Data)</span></h2>
+                    <div class="csv-badge">external_supplier_quotes.csv</div>
+                </div>
+                <p class="section-desc">The catalog of available outsourcing options and their costs/risks.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Column Name</th>
+                                <th>Description</th>
+                                <th>Data Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: #fff; font-weight: 500;">item_id</td>
+                                <td>The item being quoted by the vendor.</td>
+                                <td><span class="data-type foreign-key">FK : String</span></td>
+                            </tr>
+                            <tr>
+                                <td>vendor_price_per_unit</td>
+                                <td>Base price to buy one unit.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                            <tr>
+                                <td>vendor_lead_time_days</td>
+                                <td>Number of days from order placement to delivery.</td>
+                                <td><span class="data-type">Integer</span></td>
+                            </tr>
+                            <tr style="background: rgba(139, 92, 246, 0.05);">
+                                <td style="color: #A78BFA; font-weight: 500;">vendor_reliability_score</td>
+                                <td>Historical score of the vendor's performance (0.0 to 1.0).</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                            <tr>
+                                <td>incoming_qa_hours_per_unit</td>
+                                <td>Time required to inspect bought items upon arrival.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                            <tr>
+                                <td>incoming_qa_cost_per_unit</td>
+                                <td>Cost to inspect bought items upon arrival.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 6. Vendor Reliability System -->
+            <section class="schema-section" style="border-color: rgba(139, 92, 246, 0.3);">
+                <div class="section-header">
+                    <div class="section-number"
+                        style="background: linear-gradient(135deg, #8B5CF6, #EC4899); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);">
+                        6</div>
+                    <h2>Vendor Reliability Score System</h2>
+                </div>
+                <p class="section-desc">The Vendor Reliability Score (VRS) transforms qualitative supplier risk into a
+                    quantitative metric used by the MILP optimizer to adjust effective procurement costs.</p>
+
+                <div class="rel-formula">
+                    VRS = (W₁ × Quality) + (W₂ × Delivery) + (W₃ × Cost) + (W₄ × Responsiveness)
+                </div>
+
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">The final score ranges from 0 to 1. In the
+                    optimization engine, the baseline purchase cost is divided by the VRS, dynamically increasing the
+                    effective cost of dealing with unreliable vendors.</p>
+
+                <div class="reliability-grid">
+
+                    <div class="rel-card">
+                        <div class="rel-weight">W₁ = 0.40</div>
+                        <h4>🛡️ Quality Score</h4>
+                        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem;">Measures the
+                            historical defect rate of incoming parts from the vendor.</p>
+                        <div
+                            style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 6px; font-size: 0.85rem; color: #94A3B8;">
+                            <span style="color: #60A5FA;">Calculation:</span><br>
+                            (Total Units Accepted) / (Total Units Supplied)
+                        </div>
+                    </div>
+
+                    <div class="rel-card">
+                        <div class="rel-weight">W₂ = 0.30</div>
+                        <h4>⏱️ Delivery Score</h4>
+                        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem;">Measures adherence
+                            to promised lead times to prevent production stalls.</p>
+                        <div
+                            style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 6px; font-size: 0.85rem; color: #94A3B8;">
+                            <span style="color: #60A5FA;">Calculation:</span><br>
+                            (Orders Delivered On-Time) / (Total Orders Placed)
+                        </div>
+                    </div>
+
+                    <div class="rel-card">
+                        <div class="rel-weight">W₃ = 0.20</div>
+                        <h4>💵 Cost Consistency</h4>
+                        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem;">Evaluates the
+                            supplier's tendency to suddenly escalate agreed prices.</p>
+                        <div
+                            style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 6px; font-size: 0.85rem; color: #94A3B8;">
+                            <span style="color: #60A5FA;">Calculation:</span><br>
+                            1 - (Price Escalation Instances / Total Orders)
+                        </div>
+                    </div>
+
+                    <div class="rel-card">
+                        <div class="rel-weight">W₄ = 0.10</div>
+                        <h4>💬 Responsiveness</h4>
+                        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem;">Scores the
+                            supplier's agility in communication and issue resolution.</p>
+                        <div
+                            style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 6px; font-size: 0.85rem; color: #94A3B8;">
+                            <span style="color: #60A5FA;">Calculation:</span><br>
+                            1 - (Avg Response Time / Max Acceptable Time)
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const sections = document.querySelectorAll('.schema-section');
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                sections.forEach(section => {
+                    observer.observe(section);
+                });
+            });
+        </script>
+
+    </div>
+</body>
+
+</html>

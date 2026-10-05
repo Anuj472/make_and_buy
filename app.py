@@ -15,22 +15,46 @@ def load_data():
         df_routings = pd.read_csv("production_routings.csv")
         df_quotes = pd.read_csv("external_supplier_quotes.csv")
         df_orders = pd.read_csv("active_indents.csv")
-        return df_items, df_machines, df_routings, df_quotes, df_orders
+        
+        # New MCDM Tables
+        df_strat = pd.read_csv("strategic_performance_data.csv")
+        df_mgr = pd.read_csv("managerial_performance_data.csv")
+        df_risk = pd.read_csv("sourcing_risk_data.csv")
+        
+        return df_items, df_machines, df_routings, df_quotes, df_orders, df_strat, df_mgr, df_risk
     except Exception as e:
         st.error(f"Error loading datasets: {e}")
-        return None, None, None, None, None
+        return None, None, None, None, None, None, None, None
 
-df_items, df_machines, df_routings, df_quotes, df_orders = load_data()
+df_items, df_machines, df_routings, df_quotes, df_orders, df_strat, df_mgr, df_risk = load_data()
 
 if df_orders is not None:
-    st.sidebar.header("⚙️ Optimization Parameters")
-    st.sidebar.markdown("Adjust global constraints before running the solver.")
+    st.sidebar.header("🎯 Optimization Goal")
+    st.sidebar.markdown("Select the primary objective for the solver:")
+    
+    # Selectable buttons (Radio)
+    opt_goal = st.sidebar.radio(
+        "Choose Goal:",
+        [
+            "💰 Maximize Financial Performance", 
+            "🛡️ Minimize Sourcing Risks",
+            "👥 Maximize Managerial Performance",
+            "🏆 Maximize Strategic Competitive Performance"
+        ]
+    )
+    
+    st.sidebar.markdown("---")
+    st.sidebar.header("⚙️ Constraints")
     capacity_multiplier = st.sidebar.slider("Machine Capacity Multiplier", 0.1, 2.0, 1.0, 0.1, help="Artificially increase or restrict factory capacity to see how the solver reacts.")
     
     if st.button("🚀 Run MILP Optimization", type="primary"):
         with st.spinner("Initializing PuLP Solver and building matrix..."):
             # Pre-Processing
-            df = df_orders.merge(df_items, on="item_id").merge(df_quotes, on="item_id")
+            df = df_orders.merge(df_items, on="item_id")\
+                          .merge(df_quotes, on="item_id")\
+                          .merge(df_strat, on="item_id")\
+                          .merge(df_mgr, on="item_id")\
+                          .merge(df_risk, on="item_id")
             
             machine_net_cap = {}
             machine_rates = {}
@@ -58,20 +82,40 @@ if df_orders is not None:
                 
             objective_terms = []
             
-            # 1. Item-Level Costs (Raw Material, Direct Labor, Vendor Price)
             for _, row in df.iterrows():
                 order = row['order_id']
                 
-                rm_cost = row['raw_material_cost_per_unit'] * (1 + row['expected_scrap_percentage'])
-                labor_cost = row.get('labor_cost_per_unit', 0)
+                # --- Goal 1: Financial ---
+                if "Financial" in opt_goal:
+                    rm_cost = row['raw_material_cost_per_unit'] * (1 + row['expected_scrap_percentage'])
+                    labor_cost = row.get('labor_cost_per_unit', 0)
+                    make_penalty = rm_cost + labor_cost
+                    buy_penalty = row['true_buy_cost']
                 
-                # Make Cost = Raw Material + Direct Item Labor
-                objective_terms.append(make_vars[order] * (rm_cost + labor_cost))
+                # --- Goal 2: Sourcing Risks ---
+                # Paper states -8 is max negative risk, +8 is max positive.
+                # To minimize risk in a minimization solver, we penalize negative scores.
+                elif "Risks" in opt_goal:
+                    risk_score = row['ip_leakage_risk'] + row['supplier_disruption_risk'] + row['appropriation_risk']
+                    make_penalty = 0 # No external risk for making
+                    buy_penalty = (24 - risk_score) # Shift score so a bad risk (-24) becomes a huge penalty (48)
                 
-                # Buy Cost = Vendor Price + QA
-                objective_terms.append(buy_vars[order] * row['true_buy_cost'])
+                # --- Goal 3: Managerial Performance ---
+                elif "Managerial" in opt_goal:
+                    mgr_score = row['transaction_complexity'] + row['supplier_rel_value'] + row['customer_perception']
+                    make_penalty = 0 
+                    buy_penalty = (24 - mgr_score) # Shift score to penalize bad managerial outcomes
                 
-            # 2. Machine Operating Costs & Constraints
+                # --- Goal 4: Strategic Competitive Performance ---
+                elif "Strategic" in opt_goal:
+                    # Penalize lead times and defect rates
+                    make_penalty = row['internal_lead_time_days'] + (row['internal_defect_rate'] * 1000) - row['volume_flexibility_score']
+                    buy_penalty = row['vendor_lead_time_days_x'] + (row['vendor_defect_rate'] * 1000)
+                
+                objective_terms.append(make_vars[order] * make_penalty)
+                objective_terms.append(buy_vars[order] * buy_penalty)
+                
+            # Machine Constraints
             for m_id in machine_net_cap.keys():
                 machine_usage = []
                 for _, row in df.iterrows():
@@ -85,17 +129,17 @@ if df_orders is not None:
                         setup_hrs = routing_step['setup_hours'].values[0]
                         rate = machine_rates[m_id]
                         
-                        # Machine Hours Used
                         setup_used = is_make[order] * setup_hrs
                         run_used = make_vars[order] * run_hrs * scrap_factor
                         machine_usage.append(setup_used)
                         machine_usage.append(run_used)
                         
-                        # Admin/Overhead Cost of running the machine
-                        objective_terms.append(setup_used * rate)
-                        objective_terms.append(run_used * rate)
+                        # Only add Machine Cost to objective if optimizing Financials
+                        if "Financial" in opt_goal:
+                            objective_terms.append(setup_used * rate)
+                            objective_terms.append(run_used * rate)
                 
-                # Machine capacity constraint
+                # Machine capacity constraint ALWAYS applies
                 if machine_usage:
                     model += pulp.lpSum(machine_usage) <= machine_net_cap[m_id], f"CapLimit_{m_id}"
                     
@@ -113,7 +157,7 @@ if df_orders is not None:
             stats = model.solve()
             
         if stats.status.name in ['Optimal', 'GapLimit']:
-            st.success(f"Optimization Complete! Status: {stats.status.name}")
+            st.success(f"Optimization Complete! Status: {stats.status.name} | Goal: {opt_goal}")
             
             # Extract Results
             results = []
@@ -135,7 +179,7 @@ if df_orders is not None:
             
             # Metrics
             col1, col2, col3, col4 = st.columns(4)
-            col1.metric("Optimal Total Cost", f"₹{pulp.value(model.objective):,.0f}")
+            col1.metric("Optimal Penalty Score", f"{pulp.value(model.objective):,.0f}")
             col2.metric("Total Items Made", f"{df_results['Make_In_House_Qty'].sum():.0f}")
             col3.metric("Total Items Bought", f"{df_results['Buy_External_Qty'].sum():.0f}")
             col4.metric("Split Orders", len(df_results[df_results['Decision'] == 'MAKE and BUY']))
@@ -160,10 +204,6 @@ if df_orders is not None:
                 
             st.markdown("### Final Order Decisions")
             st.dataframe(df_results, use_container_width=True)
-            
-            # Download button
-            csv = df_results.to_csv(index=False).encode('utf-8')
-            st.download_button("Download CSV", data=csv, file_name="Final_Make_Buy_Decisions.csv", mime="text/csv")
             
         else:
             st.error(f"Solver failed to find an optimal solution. Status: {stats.status.name}")
