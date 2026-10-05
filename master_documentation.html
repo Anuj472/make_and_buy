@@ -350,16 +350,7 @@
                             <td>Vendor Purchase Price + Shipping/Tariffs + Incoming QA Cost.</td>
                             <td>Currency (₹)</td>
                         </tr>
-                        <tr>
-                            <td>Capital Expenditure (CapEx)</td>
-                            <td>New investments required (e.g., buying new CNC machines).</td>
-                            <td>Currency (₹)</td>
-                        </tr>
-                        <tr>
-                            <td>Inventory Holding Cost</td>
-                            <td>Cost of stockpiling raw materials vs. Just-In-Time vendor delivery.</td>
-                            <td>Currency (₹)</td>
-                        </tr>
+
                     </tbody>
                 </table>
 
@@ -550,7 +541,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="color: #fff; font-weight: 500;">order_id</td>
+                                <td style="color: var(--primary); font-weight: 700;">order_id</td>
                                 <td>Unique identifier for the customer order.</td>
                                 <td><span class="data-type primary-key">PK : String</span></td>
                             </tr>
@@ -611,7 +602,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="color: #fff; font-weight: 500;">item_id</td>
+                                <td style="color: var(--primary); font-weight: 700;">item_id</td>
                                 <td>Unique identifier for the product/assembly.</td>
                                 <td><span class="data-type primary-key">PK : String</span></td>
                             </tr>
@@ -665,7 +656,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="color: #fff; font-weight: 500;">machine_id</td>
+                                <td style="color: var(--primary); font-weight: 700;">machine_id</td>
                                 <td>Unique identifier for a piece of factory equipment.</td>
                                 <td><span class="data-type primary-key">PK : String</span></td>
                             </tr>
@@ -710,12 +701,12 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="color: #fff; font-weight: 500;">item_id</td>
+                                <td style="color: var(--primary); font-weight: 700;">item_id</td>
                                 <td>The product being built.</td>
                                 <td><span class="data-type foreign-key">FK : String</span></td>
                             </tr>
                             <tr>
-                                <td style="color: #fff; font-weight: 500;">operation_sequence</td>
+                                <td style="color: var(--primary); font-weight: 700;">operation_sequence</td>
                                 <td>The order of the manufacturing step (e.g. 10, 20, 30).</td>
                                 <td><span class="data-type primary-key">Composite PK : Integer</span></td>
                             </tr>
@@ -760,7 +751,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="color: #fff; font-weight: 500;">item_id</td>
+                                <td style="color: var(--primary); font-weight: 700;">item_id</td>
                                 <td>The item being quoted by the vendor.</td>
                                 <td><span class="data-type foreign-key">FK : String</span></td>
                             </tr>
@@ -821,7 +812,7 @@
                         <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem;">Measures the
                             historical defect rate of incoming parts from the vendor.</p>
                         <div
-                            style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 6px; font-size: 0.85rem; color: #94A3B8;">
+                            style="background: #1e293b; padding: 0.8rem; border-radius: 6px; font-size: 0.85rem; color: #e2e8f0;">
                             <span style="color: #60A5FA;">Calculation:</span><br>
                             (Total Units Accepted) / (Total Units Supplied)
                         </div>
@@ -833,7 +824,7 @@
                         <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem;">Measures adherence
                             to promised lead times to prevent production stalls.</p>
                         <div
-                            style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 6px; font-size: 0.85rem; color: #94A3B8;">
+                            style="background: #1e293b; padding: 0.8rem; border-radius: 6px; font-size: 0.85rem; color: #e2e8f0;">
                             <span style="color: #60A5FA;">Calculation:</span><br>
                             (Orders Delivered On-Time) / (Total Orders Placed)
                         </div>
@@ -845,7 +836,7 @@
                         <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem;">Evaluates the
                             supplier's tendency to suddenly escalate agreed prices.</p>
                         <div
-                            style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 6px; font-size: 0.85rem; color: #94A3B8;">
+                            style="background: #1e293b; padding: 0.8rem; border-radius: 6px; font-size: 0.85rem; color: #e2e8f0;">
                             <span style="color: #60A5FA;">Calculation:</span><br>
                             1 - (Price Escalation Instances / Total Orders)
                         </div>
@@ -857,12 +848,154 @@
                         <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem;">Scores the
                             supplier's agility in communication and issue resolution.</p>
                         <div
-                            style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 6px; font-size: 0.85rem; color: #94A3B8;">
+                            style="background: #1e293b; padding: 0.8rem; border-radius: 6px; font-size: 0.85rem; color: #e2e8f0;">
                             <span style="color: #60A5FA;">Calculation:</span><br>
                             1 - (Avg Response Time / Max Acceptable Time)
                         </div>
                     </div>
 
+                </div>
+            </section>
+
+            <!-- 7. Strategic Performance Data -->
+            <section class="schema-section">
+                <div class="section-header">
+                    <div class="section-number">7</div>
+                    <h2>Strategic Performance Data</h2>
+                    <div class="csv-badge">strategic_performance_data.csv</div>
+                </div>
+                <p class="section-desc">Metrics required to optimize for strategic competitive performance.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Column Name</th>
+                                <th>Description</th>
+                                <th>Data Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: var(--primary); font-weight: 700;">item_id</td>
+                                <td>Foreign key linking to the item.</td>
+                                <td><span class="data-type foreign-key">FK : String</span></td>
+                            </tr>
+                            <tr>
+                                <td>internal_lead_time_days</td>
+                                <td>Days required to produce internally.</td>
+                                <td><span class="data-type">Integer</span></td>
+                            </tr>
+                            <tr>
+                                <td>vendor_lead_time_days</td>
+                                <td>Days required for vendor to deliver.</td>
+                                <td><span class="data-type">Integer</span></td>
+                            </tr>
+                            <tr>
+                                <td>internal_defect_rate</td>
+                                <td>Expected quality defect rate internally.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                            <tr>
+                                <td>vendor_defect_rate</td>
+                                <td>Expected quality defect rate from vendor.</td>
+                                <td><span class="data-type">Float</span></td>
+                            </tr>
+                            <tr>
+                                <td>volume_flexibility_score</td>
+                                <td>Score (-8 to +8) on handling sudden demand spikes.</td>
+                                <td><span class="data-type">Integer</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 8. Managerial Performance Data -->
+            <section class="schema-section">
+                <div class="section-header">
+                    <div class="section-number">8</div>
+                    <h2>Managerial Performance Data</h2>
+                    <div class="csv-badge">managerial_performance_data.csv</div>
+                </div>
+                <p class="section-desc">Metrics evaluating relationship management and transactional complexity.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Column Name</th>
+                                <th>Description</th>
+                                <th>Data Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: var(--primary); font-weight: 700;">item_id</td>
+                                <td>Foreign key linking to the item.</td>
+                                <td><span class="data-type foreign-key">FK : String</span></td>
+                            </tr>
+                            <tr>
+                                <td>transaction_complexity</td>
+                                <td>Score (-8 to +8) on management difficulty.</td>
+                                <td><span class="data-type">Integer</span></td>
+                            </tr>
+                            <tr>
+                                <td>supplier_rel_value</td>
+                                <td>Score (-8 to +8) on strategic partnership necessity.</td>
+                                <td><span class="data-type">Integer</span></td>
+                            </tr>
+                            <tr>
+                                <td>customer_perception</td>
+                                <td>Score (-8 to +8) on customer reaction to outsourcing.</td>
+                                <td><span class="data-type">Integer</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 9. Sourcing Risk Data -->
+            <section class="schema-section">
+                <div class="section-header">
+                    <div class="section-number">9</div>
+                    <h2>Sourcing Risk Data</h2>
+                    <div class="csv-badge">sourcing_risk_data.csv</div>
+                </div>
+                <p class="section-desc">Metrics predicting IP leakage, disruption, and competitive threats.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Column Name</th>
+                                <th>Description</th>
+                                <th>Data Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: var(--primary); font-weight: 700;">item_id</td>
+                                <td>Foreign key linking to the item.</td>
+                                <td><span class="data-type foreign-key">FK : String</span></td>
+                            </tr>
+                            <tr>
+                                <td>ip_leakage_risk</td>
+                                <td>Score (-8 to +8) on risk of proprietary design theft.</td>
+                                <td><span class="data-type">Integer</span></td>
+                            </tr>
+                            <tr>
+                                <td>supplier_disruption_risk</td>
+                                <td>Score (-8 to +8) rating vendor solvency/disaster risk.</td>
+                                <td><span class="data-type">Integer</span></td>
+                            </tr>
+                            <tr>
+                                <td>appropriation_risk</td>
+                                <td>Score (-8 to +8) rating risk vendor becomes competitor.</td>
+                                <td><span class="data-type">Integer</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
 
