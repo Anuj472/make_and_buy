@@ -5,7 +5,7 @@ import plotly.express as px
 
 st.set_page_config(page_title="Make vs Buy Optimizer", page_icon="🏭", layout="wide")
 
-st.title("🏭 Intelligent Make vs. Buy Optimizer")
+st.title("🏭 Make vs. Buy Optimizer")
 st.markdown("Optimize your supply chain by mathematically deciding which orders to manufacture in-house and which to outsource based on capacity and cost.")
 
 def load_data():
