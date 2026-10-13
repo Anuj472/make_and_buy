@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Shop Scheduling: Technical Documentation & Implementation Guide</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #eff6ff;
+            --primary-dark: #1d4ed8;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --bg-main: #f9fafb;
+            --card-bg: #ffffff;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --success-light: #ecfdf5;
+            --warning: #f59e0b;
+            --warning-light: #fffbeb;
+            --danger: #ef4444;
+            --danger-light: #fef2f2;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+        }
+
+        .top-banner {
+            text-align: center;
+            margin: 0 0 2.5rem 0;
+            padding: 2rem;
+            background: #1e293b;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .top-banner h1 {
+            color: white;
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .top-banner p {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            color: #cbd5e1;
+        }
+
+        .btn-link {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+
+        .btn-link:hover {
+            background: var(--primary-dark);
+        }
+
+        .scenario-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+        }
+
+        .scenario-header {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .scenario-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            background: var(--primary-light);
+            padding: 0.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+        }
+
+        .scenario-title h2 {
+            margin: 0;
+            color: var(--text-main);
+            font-size: 1.35rem;
+        }
+
+        .scenario-title p {
+            margin: 0;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        .formula-box {
+            background: #f1f5f9;
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.25rem;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.95rem;
+            margin: 1rem 0;
+            border-radius: 0 6px 6px 0;
+            color: #0f172a;
+            line-height: 1.7;
+        }
+
+        .source-box {
+            background-color: #f8fafc;
+            border-left: 4px solid #0ea5e9;
+            padding: 1.2rem;
+            border-radius: 0 6px 6px 0;
+            margin-top: 1.2rem;
+        }
+
+        .source-box h4 {
+            margin-top: 0;
+            color: #0284c7;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .source-box ul {
+            margin: 0;
+            padding-left: 1.5rem;
+            color: var(--text-main);
+        }
+
+        .source-box li {
+            margin-bottom: 0.4rem;
+        }
+
+        .doc-section {
+            margin-bottom: 4rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 3px dashed #cbd5e1;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .tag-blue {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .tag-green {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .tag-orange {
+            background: var(--warning-light);
+            color: #b45309;
+        }
+
+        .highlight-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 6px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        .flow-num {
+            background: var(--primary);
+            color: white;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-banner">
+        <h1>Master Job Shop Scheduling Documentation</h1>
+        <p>Complete Guide to Input Variables, Scheduling Algorithms, Machine Constraints, and Calendar Math</p>
+        <a href="master_documentation.html" class="btn-link">
+            &larr; Back to Make-or-Buy Master Documentation
+        </a>
+    </div>
+
+    <div class="container">
+
+        <!-- ========================================== -->
+        <!-- SECTION 1: HOW IT WORKS IN PLAIN ENGLISH -->
+        <!-- ========================================== -->
+        <div class="doc-section">
+            <div class="header">
+                <h1>Overview: What is Job Shop Scheduling?</h1>
+                <p>How the system turns Make-or-Buy decisions into an exact minute-by-minute factory schedule</p>
+            </div>
+
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🏭</div>
+                    <div class="scenario-title">
+                        <h2>The Big Picture (The 2-Stage Manufacturing System)</h2>
+                        <p>Bridging strategic planning with daily shop-floor machine dispatches</p>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-num">1</div>
+                    <div>
+                        <strong style="color: var(--primary); font-size: 1.05rem;">Stage 1: The Make vs. Buy Optimizer (MILP / PuLP)</strong>
+                        <p style="margin: 0.3rem 0 0 0; color: var(--text-muted);">
+                            Looks at yearly customer orders, machine hours, and supplier prices. It decides <em>which orders to manufacture in-house</em> and <em>which orders to outsource to vendors</em>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-num">2</div>
+                    <div>
+                        <strong style="color: var(--primary); font-size: 1.05rem;">Stage 2: The Job Shop Scheduler (Google OR-Tools CP-SAT)</strong>
+                        <p style="margin: 0.3rem 0 0 0; color: var(--text-muted);">
+                            Takes only the orders decided for in-house manufacturing (<code class="tag tag-green">Make_In_House_Qty &gt; 0</code>). It looks at the step-by-step routing operations (e.g. Milling &rarr; Polishing &rarr; Coating &rarr; Testing) and calculates the exact start and finish times for every job on every machine without any machine conflicts.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-num">3</div>
+                    <div>
+                        <strong style="color: var(--primary); font-size: 1.05rem;">Stage 3: The Calendar Engine & Shop Floor Gantt Chart</strong>
+                        <p style="margin: 0.3rem 0 0 0; color: var(--text-muted);">
+                            Converts the solver's working minutes into real calendar dates and shift hours (8:00 AM to 6:00 PM, Monday to Saturday, skipping Sundays), allowing supervisors to filter by machine, month, and week, or download a CSV dispatch sheet.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SECTION 2: INPUT VARIABLES & DATA SCHEMAS -->
+        <!-- ========================================== -->
+        <div class="doc-section">
+            <div class="header">
+                <h1>The Input Variables & Data Tables</h1>
+                <p>Every CSV file, column, and data point used by the Job Shop Scheduler</p>
+            </div>
+
+            <!-- TABLE 1: ACTIVE INDENTS & DECISIONS -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">📋</div>
+                    <div class="scenario-title">
+                        <h2>1. Order & Demand Data (Final_Make_Buy_Decisions.csv / active_indents.csv)</h2>
+                        <p>Tells the scheduler which customer jobs need to be made, how many units, and when they are due</p>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data Attribute</th>
+                            <th>Description</th>
+                            <th>Data Type</th>
+                            <th>Example</th>
+                            <th>How the Scheduler Uses It</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Order_ID</strong></td>
+                            <td>Unique identifier for the customer order.</td>
+                            <td>Text</td>
+                            <td><code>MOD-ORD-1002</code></td>
+                            <td>Labels the job bar in the Gantt chart and creates distinct variables.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Item_ID</strong></td>
+                            <td>Product part code being made.</td>
+                            <td>Text</td>
+                            <td><code>IOL-OPT-002</code></td>
+                            <td>Matches with the production routings file to get the list of manufacturing steps.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Make_In_House_Qty</strong></td>
+                            <td>Quantity assigned to be made in-house.</td>
+                            <td>Integer</td>
+                            <td><code>24 units</code></td>
+                            <td>If 0, this order is skipped. If &gt; 0, this quantity is multiplied by run hours per unit.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Delivery_Period_Days</strong></td>
+                            <td>Target delivery deadline in business days.</td>
+                            <td>Number</td>
+                            <td><code>180 days</code></td>
+                            <td>Converted into working minutes to calculate whether a job is on-time or tardy.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ld_rate_per_week</strong></td>
+                            <td>Liquidated Damages penalty rate per week late.</td>
+                            <td>Percentage</td>
+                            <td><code>0.5% (0.005)</code></td>
+                            <td>Measures financial penalty if the job finishes after the due date.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="formula-box">
+                    <strong>Due Date in Working Minutes Formula:</strong><br>
+                    due_date_minutes = Delivery_Period_Days * 600 minutes<br>
+                    <span style="color: #64748b;">// Explanation: Since the plant runs 10 hours a day, 1 working day = 10 hours * 60 mins = 600 mins.</span>
+                </div>
+
+                <div class="source-box">
+                    <h4>🔄 Where this data comes from:</h4>
+                    <ul>
+                        <li><strong>ERP Sales Module / Indents:</strong> Customer sales orders or production indents provide the quantity and agreed delivery dates.</li>
+                        <li><strong>Stage 1 Optimizer Output:</strong> The Make vs. Buy optimizer generates <code>Final_Make_Buy_Decisions.csv</code> saving the recommended quantities.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- TABLE 2: PRODUCTION ROUTINGS -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">⚙️</div>
+                    <div class="scenario-title">
+                        <h2>2. Production Routings (production_routings.csv)</h2>
+                        <p>Defines the step-by-step recipe, machine order, setup time, and run time for each item</p>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data Attribute</th>
+                            <th>Description</th>
+                            <th>Data Type</th>
+                            <th>Example</th>
+                            <th>How the Scheduler Uses It</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>item_id</strong></td>
+                            <td>Part code matching the order.</td>
+                            <td>Text</td>
+                            <td><code>IOL-OPT-002</code></td>
+                            <td>Links the routing recipe to the active order.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>operation_sequence</strong></td>
+                            <td>The order in which steps must happen.</td>
+                            <td>Integer</td>
+                            <td><code>10, 20, 30</code></td>
+                            <td>Enforces strict order: Step 10 must finish before Step 20 can start.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>machine_id</strong></td>
+                            <td>The required workstation/equipment.</td>
+                            <td>Text</td>
+                            <td><code>CNC_MILL</code></td>
+                            <td>Tells the solver which machine calendar to assign this task to.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>setup_hours</strong></td>
+                            <td>Fixed time to clean, tool, and calibrate machine.</td>
+                            <td>Hours</td>
+                            <td><code>1.0 hr</code></td>
+                            <td>Required once per batch, regardless of whether making 1 unit or 100 units.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>run_hours_per_unit</strong></td>
+                            <td>Machining time to produce 1 finished piece.</td>
+                            <td>Hours/Unit</td>
+                            <td><code>2.48 hrs</code></td>
+                            <td>Multiplied by <code>Make_In_House_Qty</code> to get total production run time.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="formula-box">
+                    <strong>Total Task Duration Formula (in Minutes):</strong><br>
+                    total_hours = setup_hours + (run_hours_per_unit * Make_In_House_Qty)<br>
+                    duration_minutes = ceiling(total_hours * 60)<br><br>
+                    <span style="color: #64748b;">// Example for Order 1002 (24 units on CNC_MILL):</span><br>
+                    total_hours = 1.0 + (2.48 * 24) = 1.0 + 59.52 = 60.52 hours<br>
+                    duration_minutes = ceiling(60.52 * 60) = 3,632 minutes (approx. 6 working days)
+                </div>
+
+                <div class="source-box">
+                    <h4>🔄 Where this data comes from:</h4>
+                    <ul>
+                        <li><strong>Manufacturing Engineering (PLM):</strong> Industrial engineers perform time-and-motion studies to define standard setup and cycle times for each part.</li>
+                        <li><strong>Routing Master in MES:</strong> Contains the approved sequence of operations for quality compliance.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- TABLE 3: MACHINE CAPACITIES -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🛠️</div>
+                    <div class="scenario-title">
+                        <h2>3. Machine Infrastructure (machine_capacities.csv)</h2>
+                        <p>Lists available equipment, existing commitments, and hourly running rates</p>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data Attribute</th>
+                            <th>Description</th>
+                            <th>Data Type</th>
+                            <th>Example</th>
+                            <th>How the Scheduler Uses It</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>machine_id</strong></td>
+                            <td>Name of the machine work-center.</td>
+                            <td>Text</td>
+                            <td><code>LENS_POLISHER</code></td>
+                            <td>The physical resource that can only process 1 job at a time.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>available_yearly_hours</strong></td>
+                            <td>Total operational hours available per year.</td>
+                            <td>Hours</td>
+                            <td><code>1,000 hrs</code></td>
+                            <td>Ensures the total factory load does not exceed physical equipment limits.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>existing_wip_hours</strong></td>
+                            <td>Hours already busy with previous jobs.</td>
+                            <td>Hours</td>
+                            <td><code>20 hrs</code></td>
+                            <td>Represents ongoing background work before new jobs can start.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>operating_cost_per_hour</strong></td>
+                            <td>Direct cost to run the machine per hour.</td>
+                            <td>Currency</td>
+                            <td><code>₹800 / hr</code></td>
+                            <td>Used to calculate total machine operating expense.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SECTION 3: THE 3 CORE RULES (CONSTRAINTS) -->
+        <!-- ========================================== -->
+        <div class="doc-section">
+            <div class="header">
+                <h1>The Core Rules & Constraints</h1>
+                <p>The 3 unbreakable physical laws enforced by the scheduling solver</p>
+            </div>
+
+            <!-- RULE 1 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">➡️</div>
+                    <div class="scenario-title">
+                        <h2>Rule 1: Step-by-Step Sequence (Precedence Constraint)</h2>
+                        <p>A later step cannot start until the earlier step is completely finished</p>
+                    </div>
+                </div>
+                <p>
+                    In manufacturing, you cannot coat a lens before it is cut, and you cannot test it before it is polished. For every order, the solver guarantees that:
+                </p>
+                <div class="formula-box">
+                    Step_2_Start_Time &gt;= Step_1_End_Time<br>
+                    Step_3_Start_Time &gt;= Step_2_End_Time
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">
+                    <em>In the code:</em> <code>model.Add(start_var &gt;= previous_task_end)</code>
+                </p>
+            </div>
+
+            <!-- RULE 2 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🚫</div>
+                    <div class="scenario-title">
+                        <h2>Rule 2: No Machine Collisions (Disjunctive Resource Constraint)</h2>
+                        <p>A machine can only work on one order at any single minute</p>
+                    </div>
+                </div>
+                <p>
+                    If Order A is currently being processed on the <code>COATING_CHAMBER</code>, Order B must either finish before Order A begins, or wait until Order A is completely removed from the chamber. Two jobs can never occupy the same machine at the same time.
+                </p>
+                <div class="formula-box">
+                    For any Job A and Job B on Machine M:<br>
+                    Either (Job A Ends &lt;= Job B Starts) OR (Job B Ends &lt;= Job A Starts)
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">
+                    <em>In the code:</em> <code>model.AddNoOverlap(machine_intervals[machine_id])</code>
+                </p>
+            </div>
+
+            <!-- RULE 3 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">⏱️</div>
+                    <div class="scenario-title">
+                        <h2>Rule 3: Working Hours & Weekend Maintenance</h2>
+                        <p>Machines do not run 24 hours a day without stops</p>
+                    </div>
+                </div>
+                <p>
+                    Production only occurs during active shift hours. Work is automatically paused during nights and Sundays:
+                </p>
+                <div class="formula-box">
+                    1 Working Day = 10 Working Hours (8:00 AM to 6:00 PM) = 600 Minutes<br>
+                    1 Working Week = 6 Days (Monday through Saturday) = 3,600 Minutes<br>
+                    Sunday = Plant Shutdown / Preventive Maintenance (0 minutes)
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SECTION 4: THE OPTIMIZATION ALGORITHMS -->
+        <!-- ========================================== -->
+        <div class="doc-section">
+            <div class="header">
+                <h1>The Optimization Algorithms Explained Simply</h1>
+                <p>How Google OR-Tools CP-SAT solves the puzzle compared to other methods</p>
+            </div>
+
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🧠</div>
+                    <div class="scenario-title">
+                        <h2>What is Google OR-Tools CP-SAT?</h2>
+                        <p>A Constraint Programming solver built on modern SAT (Satisfiability) technology</p>
+                    </div>
+                </div>
+                <p>
+                    Think of Job Shop Scheduling like solving a giant <strong>Sudoku puzzle</strong>:
+                </p>
+                <ul>
+                    <li>You have 5 machines and 100 operations that all need time slots.</li>
+                    <li>If you schedule Job 1 early on the CNC Mill, it might delay Job 2, which then misses its delivery due date.</li>
+                </ul>
+                <p>
+                    Instead of guessing, <strong>Google OR-Tools CP-SAT</strong> uses mathematical logic:
+                </p>
+                <div class="source-box">
+                    <h4>🔍 How the Solver Thinks:</h4>
+                    <ul>
+                        <li><strong>Interval Variables:</strong> Treats each task as a solid block of time with a Start, Duration, and End.</li>
+                        <li><strong>Deduction (Edge Finding):</strong> If 3 jobs together need 20 hours on the Lens Polisher, and there are only 22 hours left before the weekend, the solver instantly deduces which job <em>must</em> go first without testing wrong combinations.</li>
+                        <li><strong>Conflict Learning:</strong> When an arrangement hits a dead end (e.g. causes a job to be late), the solver remembers why that failed and never tries that pattern again.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">⚖️</div>
+                    <div class="scenario-title">
+                        <h2>Why Google CP-SAT instead of Traditional MILP or Simple Rules?</h2>
+                        <p>Comparing common scheduling methods in manufacturing</p>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>How It Works</th>
+                            <th>Pros</th>
+                            <th>Cons / Why It Struggles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: var(--primary-light);">
+                            <td><strong>Google OR-Tools CP-SAT</strong><br><span class="tag tag-blue">Used in our App</span></td>
+                            <td>Uses Interval variables and Boolean logic specifically designed for scheduling.</td>
+                            <td>Finds mathematically proven optimal or near-optimal schedules in 5 to 30 seconds. Handles non-overlap naturally.</td>
+                            <td>Requires discrete integer minutes (no continuous fractions).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Standard MILP (PuLP / Linear)</strong></td>
+                            <td>Uses "Big-M" formulas ($y = 0$ or $1$) to force one job before another.</td>
+                            <td>Great for Stage 1 (Make vs. Buy high-level volume choices).</td>
+                            <td>Terrible for fine-grained scheduling! The solver takes hours or days because the math formulas are too loose.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Simple Dispatch Rules (FIFO / Shortest First)</strong></td>
+                            <td>Greedy rules: "First Come First Served" or "Shortest Job First".</td>
+                            <td>Instant calculation (under 1 second).</td>
+                            <td>Very poor results! Creates big idle gaps on machines and causes critical orders to finish weeks late.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Genetic Algorithms (AI Heuristics)</strong></td>
+                            <td>Simulates evolution by shuffling schedules and picking the best survivor.</td>
+                            <td>Good for massive factories with 10,000+ machines.</td>
+                            <td>Cannot guarantee that a schedule is truly optimal, and can get stuck in bad local traps.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SECTION 5: THE 5 OPTIMIZATION OBJECTIVES -->
+        <!-- ========================================== -->
+        <div class="doc-section">
+            <div class="header">
+                <h1>The Optimization Goals (What the Solver Minimizes)</h1>
+                <p>Different business goals change how the solver arranges jobs on the timeline</p>
+            </div>
+
+            <!-- GOAL 1 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">⏱️</div>
+                    <div class="scenario-title">
+                        <h2>Goal 1: Minimize Makespan (Total Factory Time)</h2>
+                        <p>Finish all jobs in the fewest total working days</p>
+                    </div>
+                </div>
+                <p>
+                    <strong>The Business Objective:</strong> Clears the factory floor as fast as possible. This frees up equipment so the company can take on new customer contracts sooner.
+                </p>
+                <div class="formula-box">
+                    Makespan = End_Time_of_the_Very_Last_Job_in_the_Plant<br>
+                    Goal: Minimize(Makespan)
+                </div>
+                <div class="highlight-box">
+                    <strong>Real Example in App:</strong> Under this goal, the solver compacted all in-house orders to finish in <strong>108 working days</strong>.
+                </div>
+            </div>
+
+            <!-- GOAL 2 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">📅</div>
+                    <div class="scenario-title">
+                        <h2>Goal 2: Minimize Tardiness (Meet Customer Due Dates)</h2>
+                        <p>Deliver orders on time and avoid late penalty damages</p>
+                    </div>
+                </div>
+                <p>
+                    <strong>The Business Objective:</strong> When customer satisfaction and contracts are the #1 priority. Instead of trying to finish everything fast, the solver prioritizes orders with urgent deadlines first.
+                </p>
+                <div class="formula-box">
+                    Lateness = Job_Finish_Time - Job_Due_Date<br>
+                    Tardiness = max(0, Lateness)  <span style="color:#64748b;">// If early, tardiness is 0</span><br><br>
+                    Goal: Minimize(Sum_of_All_Tardiness_Days)
+                </div>
+                <div class="highlight-box">
+                    <strong>Important Catch Explained:</strong> In this goal, the primary metric is total late days, NOT makespan. The schedule might take longer in total calendar days because machines prioritize urgent orders rather than packing tasks as tightly as possible.
+                </div>
+            </div>
+
+            <!-- GOAL 3 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🔄</div>
+                    <div class="scenario-title">
+                        <h2>Goal 3: Minimize Setup & Changeover Costs</h2>
+                        <p>Group similar jobs together to avoid washing and recalibrating machines</p>
+                    </div>
+                </div>
+                <p>
+                    <strong>The Business Objective:</strong> In optical lens manufacturing, switching between lens materials (e.g. Acrylic to Silicone) or optical coatings requires flushing chemical lines and resetting tooling (up to 6 hours of downtime).
+                </p>
+                <div class="formula-box">
+                    Goal: Minimize(Total_Setup_and_Changeover_Hours)<br>
+                    <span style="color:#64748b;">// Jobs using the same material or tooling are scheduled back-to-back.</span>
+                </div>
+                <div class="source-box">
+                    <h4>Inputs Required to Add This Goal:</h4>
+                    <ul>
+                        <li><strong>Changeover Matrix Table:</strong> A matrix showing the cleaning/setup time required when switching from Product A to Product B.</li>
+                        <li><strong>Sequence Variables:</strong> The solver needs to decide the order of jobs on each machine to find the shortest total transition path.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SECTION 6: CALENDAR MATH & SHIFT SPLITTING -->
+        <!-- ========================================== -->
+        <div class="doc-section">
+            <div class="header">
+                <h1>Calendar Math & Shift Splitting</h1>
+                <p>How the system turns raw working minutes into real factory calendar dates</p>
+            </div>
+
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">📆</div>
+                    <div class="scenario-title">
+                        <h2>How Working Minutes Become Calendar Dates</h2>
+                        <p>Understanding the factory shift schedule</p>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Value</th>
+                            <th>Why It Matters</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Shift Start Time</strong></td>
+                            <td>8:00 AM</td>
+                            <td>Every working day starts at 8 AM.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Shift End Time</strong></td>
+                            <td>6:00 PM</td>
+                            <td>Every working day ends at 6 PM (10 hours total).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Daily Minutes</strong></td>
+                            <td>600 minutes / day</td>
+                            <td>10 hours * 60 minutes = 600 minutes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Working Days</strong></td>
+                            <td>Monday through Saturday (6 days)</td>
+                            <td>Factory operates 6 days a week (3,600 minutes/week).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sunday</strong></td>
+                            <td>Plant Closed</td>
+                            <td>The calendar logic automatically jumps over Sundays!</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box">
+                    <h3 style="margin-top:0; color: var(--primary);">🧩 What happens if a job takes 25 hours (1,500 minutes)?</h3>
+                    <p>
+                        A 25-hour job cannot be done in one day. The system splits it into <strong>3 segments</strong>:
+                    </p>
+                    <ul>
+                        <li><strong>Day 1 (Monday):</strong> Works 10 hours (8:00 AM to 6:00 PM) &rarr; 15 hours remaining.</li>
+                        <li><strong>Day 2 (Tuesday):</strong> Works 10 hours (8:00 AM to 6:00 PM) &rarr; 5 hours remaining.</li>
+                        <li><strong>Day 3 (Wednesday):</strong> Works 5 hours (8:00 AM to 1:00 PM) &rarr; Finished!</li>
+                    </ul>
+                    <p style="margin-bottom:0; color: var(--text-muted);">
+                        The Gantt chart shows these as continuous bars on each day, perfectly respecting factory opening and closing times.
+                    </p>
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SECTION 7: STEP-BY-STEP EXAMPLE WITH NUMBERS -->
+        <!-- ========================================== -->
+        <div class="doc-section">
+            <div class="header">
+                <h1>Step-by-Step Practical Example</h1>
+                <p>Following a single real order through the entire scheduling math</p>
+            </div>
+
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🔍</div>
+                    <div class="scenario-title">
+                        <h2>Order MOD-ORD-1002 (Part: IOL-OPT-002, 24 Units)</h2>
+                        <p>See exactly how the numbers flow through the formulas</p>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-num">1</div>
+                    <div>
+                        <strong>Step 1: Check In-House Decision</strong>
+                        <p style="margin: 0.2rem 0; color: var(--text-muted);">
+                            The Make-or-Buy optimizer decided: <code>Make_In_House_Qty = 24 units</code>. Because this is &gt; 0, it enters the Job Shop Scheduler.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-num">2</div>
+                    <div>
+                        <strong>Step 2: Calculate Durations for Each Machine Operation</strong>
+                        <ul style="margin: 0.4rem 0; padding-left: 1.2rem; color: var(--text-muted); font-size: 0.95rem;">
+                            <li>
+                                <strong>Op 10 (CNC_MILL):</strong> Setup = 1.0 hr, Run = 2.48 hrs/unit.<br>
+                                Total = 1.0 + (2.48 * 24) = 60.52 hrs &rarr; <strong>3,632 minutes</strong> (approx. 6.05 working days).
+                            </li>
+                            <li>
+                                <strong>Op 20 (COATING_CHAMBER):</strong> Setup = 5.3 hrs, Run = 1.57 hrs/unit.<br>
+                                Total = 5.3 + (1.57 * 24) = 42.98 hrs &rarr; <strong>2,579 minutes</strong> (approx. 4.30 working days).
+                            </li>
+                            <li>
+                                <strong>Op 30 (ASSEMBLY_STATION):</strong> Setup = 1.0 hr, Run = 0.16 hrs/unit.<br>
+                                Total = 1.0 + (0.16 * 24) = 4.84 hrs &rarr; <strong>291 minutes</strong> (approx. 0.48 working days).
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-num">3</div>
+                    <div>
+                        <strong>Step 3: Enforce Precedence in Solver</strong>
+                        <p style="margin: 0.2rem 0; color: var(--text-muted);">
+                            The solver assigns Op 10 starting at Minute 0. It finishes at Minute 3,632. Op 20 cannot start before Minute 3,632. Op 30 cannot start before Op 20 finishes.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-num">4</div>
+                    <div>
+                        <strong>Step 4: Check Customer Due Date</strong>
+                        <p style="margin: 0.2rem 0; color: var(--text-muted);">
+                            Contract allows <code>180 days = 108,000 working minutes</code>. Total time needed is 6,502 minutes. This job easily finishes on time, so its Tardiness penalty = 0!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SECTION 8: USER INTERFACE & CSV DISPATCH -->
+        <!-- ========================================== -->
+        <div class="doc-section" style="border-bottom: none;">
+            <div class="header">
+                <h1>Shop Floor Controls & CSV Export</h1>
+                <p>How production managers filter and print the schedule for shop-floor operators</p>
+            </div>
+
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-icon">🖥️</div>
+                    <div class="scenario-title">
+                        <h2>Interactive Streamlit Dashboard Features</h2>
+                        <p>Designed for fast operational decision making</p>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>How It Works</th>
+                            <th>Shop Floor Benefit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dynamic Sidebar</strong></td>
+                            <td>Automatically swaps between Make/Buy goals and Scheduling goals depending on which button you clicked.</td>
+                            <td>Keeps the screen clean and prevents confusing options.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cascading Drill-Down Filters</strong></td>
+                            <td>Filter by <strong>Machine</strong> &rarr; narrows the <strong>Month</strong> dropdown &rarr; narrows the <strong>Week</strong> dropdown.</td>
+                            <td>A machine operator can view just their machine for the current week without scrolling through hundreds of unrelated tasks.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Plotly Interactive Gantt Chart</strong></td>
+                            <td>Hover over any colored task bar to see Job ID, Machine, Exact Shift Start/Finish, and Duration.</td>
+                            <td>Instant visual check of factory bottlenecks and idle gaps.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>📥 Download Schedule as CSV</strong></td>
+                            <td>Exports the filtered table with Job, Machine, Start Date & Time, Finish Date & Time, and Duration.</td>
+                            <td>Can be printed out and attached to traveler job sheets or imported into an MES/ERP.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="text-align: center; margin: 3rem 0 1rem 0; color: var(--text-muted); font-size: 0.9rem;">
+        Job Shop Scheduling Engine Documentation &bull; Companion to Make-or-Buy Master Documentation
+    </div>
+
+</body>
+
+</html>
