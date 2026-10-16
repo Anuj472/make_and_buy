@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whole-Factory Optimization & Process Scheduling - Slide Deck</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --card: #ffffff;
+            --text-dark: #0f172a;
+            --text-light: #f8fafc;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-light: #eff6ff;
+            --teal: #0d9488;
+            --amber: #d97706;
+            --border: #e2e8f0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background: var(--bg); color: var(--text-light); padding: 2rem 1rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 3rem; }
+        .header h1 { font-size: 2.2rem; color: #ffffff; margin-bottom: 0.5rem; }
+        .header p { color: #94a3b8; font-size: 1.1rem; }
+        .download-banner { background: linear-gradient(135deg, #1e3a8a, #2563eb); padding: 1.2rem 2rem; border-radius: 12px; margin-bottom: 2.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 25px -5px rgba(37,99,235,0.4); }
+        .download-banner h3 { font-size: 1.25rem; font-weight: 700; color: white; }
+        .download-banner p { font-size: 0.95rem; color: #bfdbfe; margin-top: 0.2rem; }
+        .badge { background: #38bdf8; color: #082f49; font-weight: 700; font-size: 0.75rem; padding: 0.3rem 0.6rem; border-radius: 6px; text-transform: uppercase; }
+        
+        .slide-card { background: #ffffff; color: var(--text-dark); border-radius: 14px; margin-bottom: 2.5rem; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 1px solid var(--border); }
+        .slide-header { background: #f8fafc; border-bottom: 1px solid var(--border); padding: 1.2rem 1.8rem; display: flex; justify-content: space-between; align-items: center; }
+        .slide-num { font-size: 0.85rem; font-weight: 800; color: var(--primary); background: var(--primary-light); padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid #bfdbfe; }
+        .slide-title { font-size: 1.4rem; font-weight: 700; color: #0f172a; }
+        .slide-body { padding: 1.8rem; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; }
+        .card-inner { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.4rem; }
+        .card-inner h4 { font-size: 1.1rem; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem; }
+        .card-inner ul { list-style-type: none; }
+        .card-inner li { font-size: 0.92rem; color: #334155; margin-bottom: 0.6rem; line-height: 1.5; }
+        .card-inner li strong { color: #0f172a; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+        th, td { padding: 12px 14px; text-align: left; font-size: 0.9rem; border-bottom: 1px solid #e2e8f0; }
+        th { background: #0f172a; color: #ffffff; font-weight: 600; }
+        tr:nth-child(even) { background: #f8fafc; }
+        
+        .tag-pill { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+        .tag-impl { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .tag-plan { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+        .tag-real { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Whole-Factory Optimization & Scheduling</h1>
+            <p>Executive Master Presentation Deck | 14 Widescreen Slides</p>
+        </div>
+
+        <div class="download-banner">
+            <div>
+                <h3>Master Presentation File Generated</h3>
+                <p>Saved at: <code>/home/anuj/Desktop/Make_or_Buy/Whole_Factory_Optimization_and_Scheduling_Master_Deck.pptx</code></p>
+            </div>
+            <span class="badge">16:9 Widescreen PPTX</span>
+        </div>
+
+        <!-- Slide 1 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 1: Title & Strategic Vision</span>
+                <span class="slide-num">SLIDE 01</span>
+            </div>
+            <div class="slide-body" style="background:#0f172a; color:white; padding:3rem 2rem; border-radius:0 0 14px 14px;">
+                <span class="badge" style="background:#1e3a8a; color:#93c5fd; margin-bottom:1rem; display:inline-block;">MANUFACTURING OPERATIONS & PLANNING</span>
+                <h2 style="font-size:2.2rem; margin-bottom:1rem; color:white;">Whole-Factory Optimal Process Scheduling & Operations Framework</h2>
+                <p style="color:#cbd5e1; font-size:1.15rem; max-width:850px; margin-bottom:2rem;">Unifying Make-vs-Buy Multi-Criteria Optimization, Flexible Job Shop (FJSSP) Parallel Scheduling, and Human-in-the-Loop Shop Floor Execution.</p>
+                <div class="grid-3">
+                    <div style="background:#1e293b; padding:1rem; border-radius:8px; border-left:4px solid #2563eb;">
+                        <strong style="color:#60a5fa;">PART I: IMPLEMENTED</strong>
+                        <p style="font-size:0.85rem; color:#cbd5e1; margin-top:0.3rem;">Make vs Buy MILP + Baseline CP-SAT Job Shop</p>
+                    </div>
+                    <div style="background:#1e293b; padding:1rem; border-radius:8px; border-left:4px solid #0d9488;">
+                        <strong style="color:#2dd4bf;">PART II: IN-PLANNING</strong>
+                        <p style="font-size:0.85rem; color:#cbd5e1; margin-top:0.3rem;">Flexible Job Shop + Manual Cart Logistics</p>
+                    </div>
+                    <div style="background:#1e293b; padding:1rem; border-radius:8px; border-left:4px solid #d97706;">
+                        <strong style="color:#f59e0b;">REALITY GROUNDING</strong>
+                        <p style="font-size:0.85rem; color:#cbd5e1; margin-top:0.3rem;">No AGVs / No IoT: Human-in-the-Loop Execution</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 2: Executive Summary — The Industrial Challenge & Solution</span>
+                <span class="slide-num">SLIDE 02</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card-inner" style="border-left: 4px solid #ef4444;">
+                        <h4 style="color:#b91c1c;">The Challenge: Local Optimization Traps</h4>
+                        <ul>
+                            <li><strong>Siloed Planning Fails:</strong> Solving Make-vs-Buy on annual machine capacity creates unexecutable weekly floor blockages.</li>
+                            <li><strong>Physical Coupling:</strong> CNC machines cannot run without parts wheeled from stores, tooling fixtures, and operators.</li>
+                            <li><strong>Bottleneck Propagation:</strong> When intermediate staging buffers fill, upstream machines are blocked from unloading.</li>
+                            <li><strong>Factory Reality:</strong> Mechanical shops do not have automated AGVs or IoT streaming telemetry. The system must work with manual carts and supervisor shift feedback.</li>
+                        </ul>
+                    </div>
+                    <div class="card-inner" style="border-left: 4px solid #0d9488;">
+                        <h4 style="color:#0f766e;">The Integrated Solution Architecture</h4>
+                        <ul>
+                            <li><strong>Pillar 1: Implemented Work (Active Codebase):</strong> Order-Level Make vs Buy MILP (PuLP), MCDM Multi-Criteria Goals, and Baseline CP-SAT Job Shop.</li>
+                            <li><strong>Pillar 2: In-Planning Target (Whole Factory):</strong> Flexible Job Shop routing across 19 parallel machines, sequence-dependent changeovers, inter-bay cart transfer times, and vacuum chamber batching.</li>
+                            <li><strong>Closed-Loop Disruption Repair:</strong> One-Click Right-Shift Repair and local re-optimization for supervisor control.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 3: Part I (Implemented) — Make vs. Buy Multi-Criteria Optimizer</span>
+                <span class="slide-num">SLIDE 03</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="card-inner" style="border-top:3px solid #2563eb;">
+                        <h4 style="color:#2563eb;">Mathematical Formulation</h4>
+                        <ul>
+                            <li><strong>PuLP MILP Solver:</strong> Integer variables for Make and Buy quantities.</li>
+                            <li><strong>Strict Demand:</strong> <code>Make + Buy == Order_Quantity</code>.</li>
+                            <li><strong>Capacity Limits:</strong> Sum of setup + run hours with scrap factors &le; net available machine hours.</li>
+                            <li><strong>Strategic Lock:</strong> Critical items strictly forbidden from outsourcing (<code>Buy == 0</code>).</li>
+                        </ul>
+                    </div>
+                    <div class="card-inner" style="border-top:3px solid #0d9488;">
+                        <h4 style="color:#0d9488;">4 Selectable MCDM Goals</h4>
+                        <ul>
+                            <li><strong>💰 Financial:</strong> Minimizes material, labor, machine runtime, and external purchase costs.</li>
+                            <li><strong>🛡️ Sourcing Risk:</strong> Penalizes IP leakage, vendor financial risk, and disruption likelihood.</li>
+                            <li><strong>👥 Managerial:</strong> Optimizes transaction complexity and supplier relationship value.</li>
+                            <li><strong>🏆 Strategic:</strong> Minimizes lead time and vendor defect rates.</li>
+                        </ul>
+                    </div>
+                    <div class="card-inner" style="border-top:3px solid #0f172a;">
+                        <h4 style="color:#0f172a;">Interactive Dashboard</h4>
+                        <ul>
+                            <li><strong>Decision Output:</strong> Automated MAKE, BUY, or MAKE & BUY tagging.</li>
+                            <li><strong>Metric Cards:</strong> Instant readouts for Made vs Bought units, penalty scores, and split orders.</li>
+                            <li><strong>Capacity Multiplier:</strong> Slider (0.1x to 2.0x) to stress-test capacity shocks.</li>
+                            <li><strong>CSV Export:</strong> Outputs directly to <code>Final_Make_Buy_Decisions.csv</code>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 4: Part I (Implemented) — Baseline Job Shop Scheduler (CP-SAT)</span>
+                <span class="slide-num">SLIDE 04</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card-inner" style="border-left:4px solid #2563eb;">
+                        <h4 style="color:#2563eb;">Google OR-Tools CP-SAT Model</h4>
+                        <ul>
+                            <li><strong>Seamless Ingestion:</strong> Automatically filters in-house manufactured orders (<code>Make_In_House_Qty > 0</code>).</li>
+                            <li><strong>Interval Variables:</strong> Integer start, duration, and end times in minutes.</li>
+                            <li><strong>Disjunctive Constraints:</strong> <code>AddNoOverlap</code> ensures machines process only one task at a time.</li>
+                            <li><strong>Precedence Chains:</strong> Operation sequence strictly enforced per item routing.</li>
+                            <li><strong>Optimization Modes:</strong> Minimize Makespan ($C_{\max}$) or Total Due-Date Tardiness.</li>
+                        </ul>
+                    </div>
+                    <div class="card-inner" style="border-left:4px solid #0d9488;">
+                        <h4 style="color:#0d9488;">Working Calendar & UI Gantt</h4>
+                        <ul>
+                            <li><strong>Real Calendar Logic:</strong> Maps minutes into 10-hour working days (8 AM - 6 PM), 6 days/week (Mon-Sat, Sun closed).</li>
+                            <li><strong>Interactive Gantt:</strong> Color-coded by Job ID using Plotly Timeline.</li>
+                            <li><strong>Cascade Filters:</strong> Filter schedule by Machine &rarr; Month &rarr; ISO Week.</li>
+                            <li><strong>CSV Downloads:</strong> Clean timetable export with exact Start/Finish timestamps for machine operators.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 5: Gap Analysis — Why Whole-Factory Planning Is Needed</span>
+                <span class="slide-num">SLIDE 05</span>
+            </div>
+            <div class="slide-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Dimension</th>
+                            <th>Current Codebase Behavior</th>
+                            <th>Operational Consequence / Gap</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. Machine Allocation</strong></td>
+                            <td>Single fixed machine name per routing step</td>
+                            <td>Ignores 19 parallel machines (<code>CNC_MILL_2..5</code>), creating artificial 4x backlogs.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. Material Handling</strong></td>
+                            <td>Transit time assumed to be 0 minutes</td>
+                            <td>Ignores 15–30 min trolley travel, part washing, deburring, and staging between bays.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. Setup Times</strong></td>
+                            <td>Static uniform setup hours per item</td>
+                            <td>Fails to model sequence-dependent changeovers (e.g. lens polishing tool lap swaps).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. Buffer Policies</strong></td>
+                            <td>Infinite buffer assumption (UIS)</td>
+                            <td>Workstation buffers hold only 2–3 carts; when full, upstream machines are physically blocked.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5. Uncertainty Handling</strong></td>
+                            <td>Static open-loop batch solve</td>
+                            <td>Schedules shatter when a machine delays by 15 mins; no repair or re-routing mechanism.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 6: Part II (In-Planning) — 4-Layer Cyber-Physical Architecture</span>
+                <span class="slide-num">SLIDE 06</span>
+            </div>
+            <div class="slide-body">
+                <div class="card-inner" style="margin-bottom:1rem; border-left:4px solid #0f172a;">
+                    <strong>Layer 1: Enterprise Layer (ERP / SCM)</strong> — Ingests customer orders, SLA due dates, and raw material arrival lead times.
+                </div>
+                <div class="card-inner" style="margin-bottom:1rem; border-left:4px solid #2563eb;">
+                    <strong>Layer 2: Advanced Planning & Scheduling (APS)</strong> — Runs finite-capacity MILP, determines Make vs Buy, and feeds back certified delivery dates to ERP.
+                </div>
+                <div class="card-inner" style="margin-bottom:1rem; border-left:4px solid #0d9488;">
+                    <strong>Layer 3: Practical MES & Reactive Engine</strong> — Coordinates Process Controller (Chamber batching) + FJSSP Sequencer (Parallel machines) + Cart Staging.
+                </div>
+                <div class="card-inner" style="border-left:4px solid #d97706;">
+                    <strong>Layer 4: Real Shop Floor Execution</strong> — Human-in-the-loop: Daily machine dispatch lists, trolley tickets, and 1-click supervisor disruption repair.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 7: In-Planning Phase 1 — Flexible Job Shop (FJSSP) & SDST</span>
+                <span class="slide-num">SLIDE 07</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card-inner" style="border-top:3px solid #2563eb;">
+                        <h4 style="color:#2563eb;">1. Parallel Machine Routing (FJSSP)</h4>
+                        <ul>
+                            <li><strong>Unlocking 19 Parallel Machines:</strong> Dynamically routes jobs across 5 CNC Mills, 5 Lens Polishers, 5 Coating Chambers, and 5 Assembly Benches.</li>
+                            <li><strong>CP-SAT Optional Intervals:</strong> Uses <code>AddOptionalIntervalVar</code> with boolean presence flags <code>x_ijk</code>.</li>
+                            <li><strong>Dynamic Load Balancing:</strong> Eliminates artificial bottlenecks and reduces total makespan by 40–60%.</li>
+                        </ul>
+                    </div>
+                    <div class="card-inner" style="border-top:3px solid #0d9488;">
+                        <h4 style="color:#0d9488;">2. Sequence-Dependent Setup Times (SDST)</h4>
+                        <ul>
+                            <li><strong>Industrial Changeover Matrix:</strong> <code>S[k, family_A, family_B]</code> models fixture swaps, tooling offset re-calibration, and optical lap changes.</li>
+                            <li><strong>CP-SAT Circuit Modeling:</strong> Enforces transition times between consecutive operations on the same machine.</li>
+                            <li><strong>Intelligent Clustering:</strong> Solvers cluster similar product families together to minimize total setup downtime.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 8: In-Planning Phase 2 — Manual Material Handling & Buffers</span>
+                <span class="slide-num">SLIDE 08</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card-inner" style="border-top:3px solid #2563eb;">
+                        <h4 style="color:#2563eb;">Manual Cart / Trolley Inter-Bay Transit</h4>
+                        <ul>
+                            <li><strong>Tailored to Factory Reality:</strong> Eliminates robotic AGV complexity; models real manual trolley and cart transit.</li>
+                            <li><strong>Transfer Delays (&tau;<sub>ab</sub>):</strong> 0 mins (same machine), 5–10 mins (same bay), 15–30 mins (inter-department move).</li>
+                            <li><strong>Physical Operations Included:</strong> Deburring, part washing, packing into tote bins, and rolling the cart to the next cell.</li>
+                            <li><strong>Precedence Constraint:</strong> <code>Start(Op_next) &ge; End(Op_current) + &tau;<sub>ab</sub></code>.</li>
+                        </ul>
+                    </div>
+                    <div class="card-inner" style="border-top:3px solid #0d9488;">
+                        <h4 style="color:#0d9488;">Workstation Staging Buffers & Blocking</h4>
+                        <ul>
+                            <li><strong>Finite Intermediate Storage (FIS):</strong> Each cell staging area has a physical limit (e.g. 2–3 carts).</li>
+                            <li><strong>Blocking Job Shop Rule:</strong> If downstream buffer is full, the upstream machine cannot unload. The machine is blocked, protecting aisles from congestion.</li>
+                            <li><strong>Cumulative Constraints:</strong> Managed via CP-SAT cumulative intervals over staging capacities.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 9: In-Planning Phase 3 — Process Batching & Thermal Time Lags</span>
+                <span class="slide-num">SLIDE 09</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card-inner" style="border-top:3px solid #2563eb;">
+                        <h4 style="color:#2563eb;">Coating Chamber Batching [B<sub>min</sub>, B<sub>max</sub>]</h4>
+                        <ul>
+                            <li><strong>Chamber Economics:</strong> Running single parts in vacuum coating chambers is economically infeasible.</li>
+                            <li><strong>Lot Sizing Bounds:</strong> Enforces minimum chamber fill (e.g. &ge; 20 units) and maximum volume (&le; 100 units).</li>
+                            <li><strong>Multi-Order Batching:</strong> Groups parts from different customer orders sharing identical optical coating recipes.</li>
+                            <li><strong>Backward Locking:</strong> Polishing tasks are pulled backward to hit the exact scheduled vacuum pump-down window.</li>
+                        </ul>
+                    </div>
+                    <div class="card-inner" style="border-top:3px solid #0d9488;">
+                        <h4 style="color:#0d9488;">Zero-Wait (ZW) & Curing Time Lags</h4>
+                        <ul>
+                            <li><strong>Zero-Wait (ZW):</strong> Prevents freshly coated glass from oxidizing before protective sealing.</li>
+                            <li><strong>Limited-Wait (LW):</strong> <code>&theta;<sub>min</sub> &le; Start(Op_next) - End(Op_batch) &le; &theta;<sub>max</sub></code>.</li>
+                            <li><strong>Cooling & Shelf-Life:</strong> Parts must cool for at least &theta;<sub>min</sub> (e.g. 60 mins) and enter assembly before adhesive shelf-life expires (&theta;<sub>max</sub>).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 10: In-Planning Phase 4 — Human-in-the-Loop Disruption Repair</span>
+                <span class="slide-num">SLIDE 10</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card-inner" style="border-top:3px solid #2563eb;">
+                        <h4 style="color:#2563eb;">Robust Safety Buffering (No Live IoT Needed)</h4>
+                        <ul>
+                            <li><strong>Brownfield Grounding:</strong> Precision CNCs and polishers lack streaming sensors; schedules cannot be minute-brittle.</li>
+                            <li><strong>Protective Time Slacks:</strong> 5–10% safety buffer added to bottleneck machine durations.</li>
+                            <li><strong>Variance Absorption:</strong> Absorbs minor manual clamping or tool adjustment slips without breaking downstream schedules.</li>
+                        </ul>
+                    </div>
+                    <div class="card-inner" style="border-top:3px solid #d97706;">
+                        <h4 style="color:#d97706;">Interactive Supervisor Disruption Console</h4>
+                        <ul>
+                            <li><strong>UI Event Logging:</strong> Supervisor logs machine downtime or job delay in Streamlit dropdowns.</li>
+                            <li><strong>Mode 1 — One-Click Right-Shift Repair:</strong> Pushes downstream tasks forward without changing machine sequence or assignments. Zero floor confusion!</li>
+                            <li><strong>Mode 2 — Local CP-SAT Re-Optimization:</strong> Locks completed/in-progress tasks and re-routes unstarted tasks across remaining parallel machines.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 11: In-Planning Phase 5 — Actionable Shop-Floor Dispatch Sheets</span>
+                <span class="slide-num">SLIDE 11</span>
+            </div>
+            <div class="slide-body">
+                <div class="grid-3">
+                    <div class="card-inner" style="border-top:3px solid #2563eb;">
+                        <h4 style="color:#2563eb;">1. Machinist Worklists</h4>
+                        <ul>
+                            <li>Per-machine daily worklist (e.g. <code>CNC_MILL_3</code>).</li>
+                            <li>Clear job execution sequence (Job 1 &rarr; 2 &rarr; 3).</li>
+                            <li>Lists cutting tools, chuck jaws, and fixture specs.</li>
+                            <li>Planned start and target completion times.</li>
+                        </ul>
+                    </div>
+                    <div class="card-inner" style="border-top:3px solid #0d9488;">
+                        <h4 style="color:#0d9488;">2. Material Cart Tickets</h4>
+                        <ul>
+                            <li>Traveler cards attached to every rolling tote cart.</li>
+                            <li>Routing instruction: "Move to Polishing Bay 2".</li>
+                            <li>Sign-off checkboxes for deburring and QA count.</li>
+                            <li>Designated input buffer rack location.</li>
+                        </ul>
+                    </div>
+                    <div class="card-inner" style="border-top:3px solid #0f172a;">
+                        <h4 style="color:#0f172a;">3. Supervisor Dashboard</h4>
+                        <ul>
+                            <li>Multi-machine Gantt with setup vs run blocks.</li>
+                            <li>Bottleneck alerts for machines &gt; 85% load.</li>
+                            <li>Buffer congestion warnings when carts pile up.</li>
+                            <li>What-If simulator to test 2nd shift/overtime.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 12: Architecture Scorecard — Implemented vs. In-Planning</span>
+                <span class="slide-num">SLIDE 12</span>
+            </div>
+            <div class="slide-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Dimension</th>
+                            <th>Current Implemented State</th>
+                            <th>Target In-Planning System</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Machine Allocation</strong></td>
+                            <td>Single fixed machine per operation</td>
+                            <td><span class="tag-pill tag-plan">Flexible Job Shop across 19 Parallel Machines</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sequence Setups</strong></td>
+                            <td>Static uniform hours per item</td>
+                            <td><span class="tag-pill tag-plan">SDST Changeover Matrix S[k, A, B] by Family</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Material Handling</strong></td>
+                            <td>Assumed 0 minutes instant transfer</td>
+                            <td><span class="tag-pill tag-plan">Manual Cart/Trolley Inter-Bay Lags (5–30 mins)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Buffer Capacity</strong></td>
+                            <td>Infinite intermediate storage (UIS)</td>
+                            <td><span class="tag-pill tag-plan">Finite Intermediate Storage (FIS) with Blocking</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Process Batching</strong></td>
+                            <td>Individual discrete piece flow</td>
+                            <td><span class="tag-pill tag-plan">Coating Chamber Batching [B_min, B_max]</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Shop Uncertainty</strong></td>
+                            <td>Static open-loop batch solve</td>
+                            <td><span class="tag-pill tag-real">Safety Slack Buffers + 1-Click Supervisor Repair</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 13 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 13: Technical Implementation Roadmap & Milestones</span>
+                <span class="slide-num">SLIDE 13</span>
+            </div>
+            <div class="slide-body">
+                <div class="card-inner" style="margin-bottom:0.8rem; border-left:4px solid #2563eb;">
+                    <strong>Phase 1: FJSSP & Parallel Pools (Weeks 1–2):</strong> Upgrade CP-SAT model to distribute jobs across <code>CNC_MILL_1..5</code> and <code>LENS_POLISHER_1..5</code>; integrate SDST matrix.
+                </div>
+                <div class="card-inner" style="margin-bottom:0.8rem; border-left:4px solid #0d9488;">
+                    <strong>Phase 2: Inter-Bay Cart Transit (Week 3):</strong> Model transfer delays &tau;<sub>ab</sub> (5–30 min) and workstation staging buffer limits $C_b$ to prevent aisle congestion.
+                </div>
+                <div class="card-inner" style="margin-bottom:0.8rem; border-left:4px solid #2563eb;">
+                    <strong>Phase 3: Vacuum Chamber Batching (Week 4):</strong> Implement coating chamber batch sizing bounds [B<sub>min</sub>, B<sub>max</sub>] and Limited-Wait cooling/curing time lags.
+                </div>
+                <div class="card-inner" style="margin-bottom:0.8rem; border-left:4px solid #d97706;">
+                    <strong>Phase 4: Disruption Management (Week 5):</strong> Build the Supervisor Disruption Console in Streamlit for One-Click Right-Shift Repair and Local Re-Optimization.
+                </div>
+                <div class="card-inner" style="border-left:4px solid #0f172a;">
+                    <strong>Phase 5: Floor Dispatch Sheets (Week 6):</strong> Deploy printable and interactive Daily Machine Dispatch Lists and Cart Traveler Tickets for shop floor execution.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14 -->
+        <div class="slide-card">
+            <div class="slide-header">
+                <span class="slide-title">Slide 14: Strategic Impact & Immediate Action Items</span>
+                <span class="slide-num">SLIDE 14</span>
+            </div>
+            <div class="slide-body" style="background:#0f172a; color:white; padding:2.5rem; border-radius:0 0 14px 14px;">
+                <h3 style="color:#60a5fa; font-size:1.6rem; margin-bottom:1.5rem;">Strategic Summary & ROI</h3>
+                <ul style="list-style-type:none; line-height:2;">
+                    <li style="font-size:1.05rem; margin-bottom:1rem;"><strong style="color:#93c5fd;">1. Proven Foundation:</strong> The existing codebase already has a working PuLP Make-vs-Buy optimizer and CP-SAT scheduler.</li>
+                    <li style="font-size:1.05rem; margin-bottom:1rem;"><strong style="color:#93c5fd;">2. Grounded in Reality:</strong> Stripping away unrealistic AGV and IoT assumptions makes the system immediately actionable with manual carts, safety buffers, and supervisor dispatch sheets.</li>
+                    <li style="font-size:1.05rem; margin-bottom:1rem;"><strong style="color:#93c5fd;">3. Instant Capacity Unlock:</strong> Unlocking the 19 parallel machines in your capacity database will cut factory makespan by 40–60% with zero capital expenditure.</li>
+                    <li style="font-size:1.05rem;"><strong style="color:#38bdf8;">4. Next Step:</strong> Proceed to Phase 1: Upgrading CP-SAT to Flexible Job Shop with Parallel Machine Pools in <code>schedule_makespan.py</code> and <code>app.py</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
